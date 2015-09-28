@@ -12,7 +12,8 @@ var nullValdrEnabledController = {
  */
 var nullValdrFormGroupController = {
   addFormItem: angular.noop,
-  removeFormItem: angular.noop
+  removeFormItem: angular.noop,
+  form: angular.noop
 };
 
 /**

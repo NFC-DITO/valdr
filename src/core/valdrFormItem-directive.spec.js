@@ -144,6 +144,26 @@ describe('valdrFormItem directive', function () {
       expect(element.hasClass(valdrClasses.invalid)).toBe(false);
     });
 
+    it('should handle constraint changed events with valdrFormGroup', function () {
+      // given
+      var formGroupTemplate =
+        '<form name="demoForm" valdr-type="TestClass">' +
+          '<div valdr-form-group>' +
+            '<input type="text" name="fieldName" ng-model="myObject.field">' +
+          '</div>' +
+        '</form>';
+      compileTemplate(formGroupTemplate);
+      spyOn(valdr, 'validate').andCallThrough();
+      ngModelController.$viewValue = 'viewValue';
+      var valdrFormGroupController = element.find('div').data('$valdrFormGroupController');
+
+      // when
+      $scope.$broadcast(valdrEvents.revalidate);
+
+      // then
+      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, valdrFormGroupController.form);
+    });
+
     it('should handle constraint changed events', function () {
       // given
       spyOn(valdr, 'validate').andCallThrough();
@@ -153,7 +173,7 @@ describe('valdrFormItem directive', function () {
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
-      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue);
+      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, angular.noop);
     });
   }
 
