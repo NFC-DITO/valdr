@@ -7,10 +7,15 @@ var valdrFormGroupDirectiveDefinition =
   ['valdrClasses', 'valdrConfig', function (valdrClasses, valdrConfig) {
     return  {
       restrict: 'EA',
-      link: function (scope, element) {
+      require: ['^form', 'valdrFormGroup'],
+      link: function (scope, element, attrs, controllers) {
         if (valdrConfig.addFormGroupClass) {
           element.addClass(valdrClasses.formGroup);
         }
+        var formCtrl = controllers[0];
+        var ctrl = controllers[1];
+
+        ctrl.form = formCtrl;
       },
       controller: ['$scope', '$element', function ($scope, $element) {
 

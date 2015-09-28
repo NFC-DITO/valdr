@@ -83,7 +83,7 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
           };
 
           var validate = function (modelValue) {
-            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
+          	var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrFormGroupController.form);
             updateNgModelController(validationResult);
             return valdrEnabled.isEnabled() ? validationResult.valid : true;
           };
